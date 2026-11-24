@@ -101,9 +101,44 @@ const updateProduct = async (req, res) => {
         });
     }
 };
+const deleteProduct = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const product = await Product.findByPk(id);
+
+        if (!product) {
+            return res.status(404).json({
+                message: "Product not found"
+            });
+        }
+
+        if (!product.isActive) {
+            return res.status(400).json({
+                message: "Product is already inactive"
+            });
+        }
+
+        await product.update({
+            isActive: false
+        });
+
+        res.status(200).json({
+            message: "Product deactivated successfully",
+            product
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Failed to deactivate product",
+            error: error.message
+        });
+    }
+};
 module.exports = {
     createProduct, 
     getAllProducts,
     getProductById,
-    updateProduct
+    updateProduct,
+    deleteProduct
 };
