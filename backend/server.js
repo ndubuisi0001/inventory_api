@@ -1,10 +1,10 @@
 require("dotenv").config();
 const express = require("express");
-
 const app = express();
+const productRoutes = require("./routes/productRoutes");
 const sequelize = require("./config/database");
 app.use(express.json());
-
+app.use("/api/products", productRoutes);
 app.get("/", (req, res) => {
     res.json({
         message: "Inventory API is running"
