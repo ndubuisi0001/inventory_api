@@ -21,7 +21,12 @@ const Customer = sequelize.define("Customer", {
     address: {
         type: DataTypes.TEXT,
         allowNull: true
-    }
+    },
+    isActive: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: true
+}
 }, {
     tableName: "customers"
 });

@@ -26,7 +26,11 @@ const createProduct = async (req, res) => {
 };
 const getAllProducts = async (req, res) => {
     try {
-        const products = await Product.findAll();
+     const products = await Product.findAll({
+    where: {
+        isActive: true
+    }
+});
 
         res.status(200).json({
             message: "Products retrieved successfully",
@@ -44,8 +48,12 @@ const getAllProducts = async (req, res) => {
 const getProductById = async (req, res) => {
     try {
         const { id } = req.params;
-
-        const product = await Product.findByPk(id);
+const product = await Product.findOne({
+    where: {
+        id: id,
+        isActive: true
+    }
+});
 
         if (!product) {
             return res.status(404).json({
